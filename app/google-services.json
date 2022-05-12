@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "441149850157",
+    "firebase_url": "https://aprendefacil-200b7-default-rtdb.firebaseio.com",
+    "project_id": "aprendefacil-200b7",
+    "storage_bucket": "aprendefacil-200b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441149850157:android:aee312a01f7d20aae46ea4",
+        "android_client_info": {
+          "package_name": "pablo_lucas.com.aprendefacil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "441149850157-ns3so4j5sds81s24ulfuvstalhlaqtc1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuDAkwkPZKcIwiL6LD_8sKOnBXfrS5xOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "441149850157-ns3so4j5sds81s24ulfuvstalhlaqtc1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
