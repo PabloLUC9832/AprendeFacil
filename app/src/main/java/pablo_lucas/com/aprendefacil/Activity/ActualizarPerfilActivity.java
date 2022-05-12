@@ -196,7 +196,76 @@ public class ActualizarPerfilActivity extends AppCompatActivity {
                     genero = "Mujer";
                 }
 
-                if(isValidEmail(correo) && validadPassword() && validarNombre(nombre)){
+                    if(isValidEmail(correo) && validadPassword() && validarNombre(nombre)){
+
+                        String contraseña = etPassword.getText().toString() ;
+
+                        String key = mDatabase.child("Usuarios").push().getKey();
+
+
+                                Usuario user = new Usuario(uid,nombre,correo,genero,fotoPerfilUri.toString(),fechaDeNacimiento);
+                                //Usuario user = new Usuario(uid,nombre,correo,genero,url,fechaDeNacimiento);
+                                Map<String,Object> userValues = user.toMap();
+
+                                Map<String,Object> childUpdates = new HashMap<>();
+                                childUpdates.put("Usuarios/"+uid,userValues);
+                                //childUpdates.put("Usuarios/8NSEfhpSjMP0ooy6OFBAfkLTQcV2",userValues);
+
+                                mDatabase.updateChildren(childUpdates);
+
+                                //ACTUALIZARRR
+                                SharedPreferences prefe=getSharedPreferences("correo", Context.MODE_PRIVATE);
+                                SharedPreferences prefe2=getSharedPreferences("password", Context.MODE_PRIVATE);
+                                String correoA = prefe.getString("correoA","no correo");
+                                String passwordA = prefe2.getString("passwordA","no password");
+                                //Toast.makeText(view.getContext(),correoA+"/"+passwordA,Toast.LENGTH_LONG).show();
+
+                                AuthCredential credential = EmailAuthProvider.getCredential(correoA,passwordA);
+                                userFB.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(view.getContext(),"Usuario autenticado",Toast.LENGTH_LONG).show();
+                                        FirebaseUser user2 = FirebaseAuth.getInstance().getCurrentUser();
+                                        //UPDATE CORREO
+                                        user2.updateEmail(correo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(view.getContext(),"Se actualizo el corroe",Toast.LENGTH_LONG).show();
+                                                }else{
+                                                    Toast.makeText(view.getContext(),"Ha ocurrido un error",Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                        });
+
+                                        user2.updatePassword(contraseña).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(view.getContext(),"Se actualizo la contraseña",Toast.LENGTH_LONG).show();
+                                                }else{
+                                                    Toast.makeText(view.getContext(),"Ha ocurrido un error",Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                        });
+
+
+                                    }
+                                });
+
+                                Toast.makeText(ActualizarPerfilActivity.this,"Se ha actualizado con exito",Toast.LENGTH_LONG).show();
+
+
+
+
+
+
+
+
+
+
+                ////////AAA
+/*                if(isValidEmail(correo) && validadPassword() && validarNombre(nombre)){
 
                     String contraseña = etPassword.getText().toString() ;
 
@@ -250,8 +319,9 @@ public class ActualizarPerfilActivity extends AppCompatActivity {
                         }
                     });
 
-                    Toast.makeText(ActualizarPerfilActivity.this,"Se ha actualizado con exito",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActualizarPerfilActivity.this,"Se ha actualizado con exito",Toast.LENGTH_LONG).show();*/
 
+                    ///AAAAAAAAAAAAA
 
 
                 }else{
