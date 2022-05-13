@@ -7,7 +7,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import pablo_lucas.com.aprendefacil.Persistencia.UsuarioDAO;
 import pablo_lucas.com.aprendefacil.R;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,6 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -45,19 +50,21 @@ public class PerfilActivity extends AppCompatActivity{
     FirebaseAuth mAuth;
 
     private String idUser;
+    FirebaseUser user2 ;
 
     //https://firebase.google.com/docs/database/android/read-and-write?hl=es-419
     //ENVIO DE DATOS A LA ACTIVITY DE ACTUALIZAR
     String nombre,correo,genero,fotoPerfilURL,fechaDeNacimiento;
-
+    String mId ="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
 
-        tvID = findViewById(R.id.tvID);
 
+        tvID = findViewById(R.id.tvID);
+        mId = FirebaseAuth.getInstance().getUid();
         tvID.setText(FirebaseAuth.getInstance().getUid());
 
         tvNombre = findViewById(R.id.tvNombre);
@@ -70,6 +77,7 @@ public class PerfilActivity extends AppCompatActivity{
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user =mAuth.getCurrentUser();
         idUser = mAuth.getCurrentUser().getUid();
+        user2 = mAuth.getCurrentUser();
         //String miId = user.getUid();
         //String fechaCreacion = (String) FirebaseAuth.getInstance().getCurrentUser().getMetadata().getCreationTimestamp();
         Date date = new Date(FirebaseAuth.getInstance().getCurrentUser().getMetadata().getCreationTimestamp());
@@ -146,6 +154,46 @@ public class PerfilActivity extends AppCompatActivity{
             startActivity(intent);
             return true;
         }
+
+        if(id == R.id.eliminar){
+            new AlertDialog.Builder(this).
+                    setTitle("Eliminar mi cuenta").
+                    setMessage("¿Estás seguro de eliminar tu cuenta").
+                    setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //FirebaseAuth.getInstance().signOut();
+                            //if(mDatabase.child("Usuarios").child(mId).removeValue().isSuccessful()){
+                                //FirebaseAuth.getInstance().signOut();
+                            if (user2.delete().isSuccessful() && mDatabase.child("Usuarios").child(mId).removeValue().isSuccessful()){
+                                Toast.makeText(getApplicationContext(),"La cuenta se ha eliminado correctamente. Te echaremos de menos :(",Toast.LENGTH_LONG).show();
+                            }else{
+                                Toast.makeText(getApplicationContext(),"ERRRORRRR",Toast.LENGTH_LONG).show();
+                            }
+/*                                user2.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            mDatabase.child("Usuarios").child(mId).removeValue();
+                                            Toast.makeText(getApplicationContext(),"La cuenta se ha eliminado correctamente. Te echaremos de menos :(",Toast.LENGTH_LONG).show();
+                                        }else{
+                                            Toast.makeText(getApplicationContext(),"Ha ocurrido un error... Vuelve a intentarlo, por favor."+ task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                                        }
+
+                                    }
+                                });*/
+                                //Toast.makeText(getApplicationContext(),"La cuenta se ha eliminado correctamente. Te echaremos de menos :(",Toast.LENGTH_LONG).show();
+                                //Intent intent = new Intent (getApplicationContext(), LoginActivity.class);
+                                //startActivity(intent);
+                               // finish();
+                            /*}else{
+                                Toast.makeText(getApplicationContext(),"Ha ocurrido un error... Vuelve a intentarlo, por favor.",Toast.LENGTH_LONG).show();
+                            }*/
+
+                        }
+                    }).setNegativeButton("No",null).show();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

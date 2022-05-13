@@ -8,4 +8,9 @@
         android:title="Actualizar Perfil"
         />
 
+    <item
+        android:id="@+id/eliminar"
+        android:title="Eliminar Perfil"
+        />
+
 </menu>

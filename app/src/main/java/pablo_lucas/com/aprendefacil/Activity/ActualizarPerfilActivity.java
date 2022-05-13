@@ -227,6 +227,7 @@ public class ActualizarPerfilActivity extends AppCompatActivity {
                                         Toast.makeText(view.getContext(),"Usuario autenticado",Toast.LENGTH_LONG).show();
                                         FirebaseUser user2 = FirebaseAuth.getInstance().getCurrentUser();
                                         //UPDATE CORREO
+
                                         user2.updateEmail(correo).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
