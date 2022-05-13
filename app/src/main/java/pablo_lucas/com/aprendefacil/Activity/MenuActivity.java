@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -16,11 +17,14 @@ public class MenuActivity extends AppCompatActivity {
 
     private Button btnMiPerfil;
     private Button btnCerrarSesion;
+    String idUser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        idUser = FirebaseAuth.getInstance().getUid();
 
         btnMiPerfil = findViewById(R.id.btnMiPerfil);
         btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
@@ -29,6 +33,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent (view.getContext(), PerfilActivity.class);
+                intent.putExtra("idUser",idUser);
                 startActivity(intent);
             }
         });
@@ -42,6 +47,8 @@ public class MenuActivity extends AppCompatActivity {
                 returnLogin();
             }
         });
+
+        Toast.makeText(this,"uid: "+idUser,Toast.LENGTH_LONG).show();
 
     }
 

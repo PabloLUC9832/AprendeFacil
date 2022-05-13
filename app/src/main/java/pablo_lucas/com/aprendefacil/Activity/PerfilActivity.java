@@ -156,6 +156,8 @@ public class PerfilActivity extends AppCompatActivity{
         }
 
         if(id == R.id.eliminar){
+            Bundle datos = getIntent().getExtras();
+            String mIdUser = datos.getString("idUser");
             new AlertDialog.Builder(this).
                     setTitle("Eliminar mi cuenta").
                     setMessage("¿Estás seguro de eliminar tu cuenta").
@@ -165,23 +167,38 @@ public class PerfilActivity extends AppCompatActivity{
                             //FirebaseAuth.getInstance().signOut();
                             //if(mDatabase.child("Usuarios").child(mId).removeValue().isSuccessful()){
                                 //FirebaseAuth.getInstance().signOut();
-                            if (user2.delete().isSuccessful() && mDatabase.child("Usuarios").child(mId).removeValue().isSuccessful()){
+/*                            if (user2.delete().isSuccessful() && mDatabase.child("Usuarios").child(mId).removeValue().isSuccessful()){
                                 Toast.makeText(getApplicationContext(),"La cuenta se ha eliminado correctamente. Te echaremos de menos :(",Toast.LENGTH_LONG).show();
                             }else{
                                 Toast.makeText(getApplicationContext(),"ERRRORRRR",Toast.LENGTH_LONG).show();
-                            }
-/*                                user2.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            }*/
+                            //https://stackoverflow.com/questions/65293485/how-to-delete-user-from-realtime-database-and-firebase-authentication-android-j
+                                user2.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            mDatabase.child("Usuarios").child(mId).removeValue();
+                                            //FirebaseAuth.getInstance().signOut();
+                                            mDatabase.child("Usuarios").child(mIdUser).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(getApplicationContext(),"de realtime",Toast.LENGTH_LONG).show();
+
+                                                    }else{
+                                                        Toast.makeText(getApplicationContext(),"no se elimino de realtime: "+task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                                                    }
+                                                }
+                                            });
                                             Toast.makeText(getApplicationContext(),"La cuenta se ha eliminado correctamente. Te echaremos de menos :(",Toast.LENGTH_LONG).show();
+                                            Intent intent = new Intent (getApplicationContext(), LoginActivity.class);
+                                            startActivity(intent);
+
                                         }else{
                                             Toast.makeText(getApplicationContext(),"Ha ocurrido un error... Vuelve a intentarlo, por favor."+ task.getException().getMessage(),Toast.LENGTH_LONG).show();
                                         }
 
                                     }
-                                });*/
+                                });
                                 //Toast.makeText(getApplicationContext(),"La cuenta se ha eliminado correctamente. Te echaremos de menos :(",Toast.LENGTH_LONG).show();
                                 //Intent intent = new Intent (getApplicationContext(), LoginActivity.class);
                                 //startActivity(intent);
