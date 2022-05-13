@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
+import pablo_lucas.com.aprendefacil.EliminarActivity;
 import pablo_lucas.com.aprendefacil.Persistencia.UsuarioDAO;
 import pablo_lucas.com.aprendefacil.R;
 
@@ -158,12 +159,18 @@ public class PerfilActivity extends AppCompatActivity{
         if(id == R.id.eliminar){
             Bundle datos = getIntent().getExtras();
             String mIdUser = datos.getString("idUser");
+            Intent intent = new Intent (getApplicationContext(), EliminarActivity.class);
+            intent.putExtra("mIdUser",FirebaseAuth.getInstance().getUid());
+            startActivity(intent);
+        }
+/*            Bundle datos = getIntent().getExtras();
+            String mIdUser = datos.getString("idUser");
             new AlertDialog.Builder(this).
                     setTitle("Eliminar mi cuenta").
                     setMessage("¿Estás seguro de eliminar tu cuenta").
                     setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                        @Override*/
+       //                 public void onClick(DialogInterface dialogInterface, int i) {
                             //FirebaseAuth.getInstance().signOut();
                             //if(mDatabase.child("Usuarios").child(mId).removeValue().isSuccessful()){
                                 //FirebaseAuth.getInstance().signOut();
@@ -173,7 +180,7 @@ public class PerfilActivity extends AppCompatActivity{
                                 Toast.makeText(getApplicationContext(),"ERRRORRRR",Toast.LENGTH_LONG).show();
                             }*/
                             //https://stackoverflow.com/questions/65293485/how-to-delete-user-from-realtime-database-and-firebase-authentication-android-j
-                                user2.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+/*                                user2.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
@@ -198,7 +205,7 @@ public class PerfilActivity extends AppCompatActivity{
                                         }
 
                                     }
-                                });
+                                });*/
                                 //Toast.makeText(getApplicationContext(),"La cuenta se ha eliminado correctamente. Te echaremos de menos :(",Toast.LENGTH_LONG).show();
                                 //Intent intent = new Intent (getApplicationContext(), LoginActivity.class);
                                 //startActivity(intent);
@@ -207,9 +214,9 @@ public class PerfilActivity extends AppCompatActivity{
                                 Toast.makeText(getApplicationContext(),"Ha ocurrido un error... Vuelve a intentarlo, por favor.",Toast.LENGTH_LONG).show();
                             }*/
 
-                        }
-                    }).setNegativeButton("No",null).show();
-        }
+        //                }
+            //        }).setNegativeButton("No",null).show();
+      //  }
 
         return super.onOptionsItemSelected(item);
     }
