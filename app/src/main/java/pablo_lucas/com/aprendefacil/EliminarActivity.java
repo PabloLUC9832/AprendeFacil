@@ -48,12 +48,14 @@ public class EliminarActivity extends AppCompatActivity {
 
                 if (task.isSuccessful()) {
                     Intent intent = new Intent (getApplicationContext(), LoginActivity.class);
+                    //startActivity(intent);
                     mDatabase.child("Usuarios").child(mIdUser).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getApplicationContext(),"de realtime",Toast.LENGTH_LONG).show();
                                 startActivity(intent);
+                                //finish();
                             }else{
                                 Toast.makeText(getApplicationContext(),"no se elimino de realtime: "+task.getException().getMessage(),Toast.LENGTH_LONG).show();
                             }
@@ -62,7 +64,8 @@ public class EliminarActivity extends AppCompatActivity {
 
                     Toast.makeText(getApplicationContext(),"La cuenta se ha eliminado correctamente. Te echaremos de menos :(",Toast.LENGTH_LONG).show();
                     //Intent intent = new Intent (getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
+                    //startActivity(intent);
+                    //finish();
 
                 }else{
                     Toast.makeText(v.getContext(),"Ha ocurrido un error: "+task.getException().getMessage(),Toast.LENGTH_LONG).show();

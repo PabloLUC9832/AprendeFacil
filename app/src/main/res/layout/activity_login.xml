@@ -40,7 +40,11 @@
         android:layout_height="wrap_content"
         android:hint="Registrarse"/>
 
-
     </LinearLayout>
+    <Button
+        android:id="@+id/idRecupera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="He olvidado mi contraseña"/>
 
 </LinearLayout>

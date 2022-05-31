@@ -35,6 +35,7 @@ public class MenuActivity extends AppCompatActivity {
                 Intent intent = new Intent (view.getContext(), PerfilActivity.class);
                 intent.putExtra("idUser",idUser);
                 startActivity(intent);
+                finish();
             }
         });
 

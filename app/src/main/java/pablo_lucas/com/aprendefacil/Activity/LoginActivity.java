@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin,btnRegistro;
     private FirebaseAuth mAuth;// ...
 
+    Button idRecupera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,8 @@ public class LoginActivity extends AppCompatActivity {
         txtContraseña = (EditText)findViewById(R.id.idContraseñaLogin);
         btnLogin = (Button) findViewById(R.id.idLoginLogin);
         btnRegistro = (Button) findViewById(R.id.idRegistroLogin);
+
+        idRecupera = findViewById(R.id.idRecupera);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -71,6 +74,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //UsuarioDAO.getInstancia().añadirFotoDePerfilALosUsuariosQueNoTienenFoto();
+
+        idRecupera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(),RecuperarPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

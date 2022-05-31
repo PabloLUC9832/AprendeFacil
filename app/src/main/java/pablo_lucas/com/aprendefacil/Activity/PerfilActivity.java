@@ -162,6 +162,7 @@ public class PerfilActivity extends AppCompatActivity{
             Intent intent = new Intent (getApplicationContext(), EliminarActivity.class);
             intent.putExtra("mIdUser",FirebaseAuth.getInstance().getUid());
             startActivity(intent);
+            finish();
         }
 /*            Bundle datos = getIntent().getExtras();
             String mIdUser = datos.getString("idUser");
