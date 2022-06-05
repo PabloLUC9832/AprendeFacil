@@ -15,6 +15,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -196,76 +198,74 @@ public class ActualizarPerfilActivity extends AppCompatActivity {
                     genero = "Mujer";
                 }
 
-                    if(isValidEmail(correo) && validadPassword() && validarNombre(nombre)){
+                ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
-                        String contraseña = etPassword.getText().toString() ;
+                if (isConnected) {
+
+                    if (isValidEmail(correo) && validadPassword() && validarNombre(nombre)) {
+
+                        String contraseña = etPassword.getText().toString();
 
                         String key = mDatabase.child("Usuarios").push().getKey();
 
 
-                                Usuario user = new Usuario(uid,nombre,correo,genero,fotoPerfilUri.toString(),fechaDeNacimiento);
-                                //Usuario user = new Usuario(uid,nombre,correo,genero,url,fechaDeNacimiento);
-                                Map<String,Object> userValues = user.toMap();
+                        Usuario user = new Usuario(uid, nombre, correo, genero, fotoPerfilUri.toString(), fechaDeNacimiento);
+                        //Usuario user = new Usuario(uid,nombre,correo,genero,url,fechaDeNacimiento);
+                        Map<String, Object> userValues = user.toMap();
 
-                                Map<String,Object> childUpdates = new HashMap<>();
-                                childUpdates.put("Usuarios/"+uid,userValues);
-                                //childUpdates.put("Usuarios/8NSEfhpSjMP0ooy6OFBAfkLTQcV2",userValues);
+                        Map<String, Object> childUpdates = new HashMap<>();
+                        childUpdates.put("Usuarios/" + uid, userValues);
+                        //childUpdates.put("Usuarios/8NSEfhpSjMP0ooy6OFBAfkLTQcV2",userValues);
 
-                                mDatabase.updateChildren(childUpdates);
+                        mDatabase.updateChildren(childUpdates);
 
-                                //ACTUALIZARRR
-                                SharedPreferences prefe=getSharedPreferences("correo", Context.MODE_PRIVATE);
-                                SharedPreferences prefe2=getSharedPreferences("password", Context.MODE_PRIVATE);
-                                String correoA = prefe.getString("correoA","no correo");
-                                String passwordA = prefe2.getString("passwordA","no password");
-                                //Toast.makeText(view.getContext(),correoA+"/"+passwordA,Toast.LENGTH_LONG).show();
+                        //ACTUALIZARRR
+                        SharedPreferences prefe = getSharedPreferences("correo", Context.MODE_PRIVATE);
+                        SharedPreferences prefe2 = getSharedPreferences("password", Context.MODE_PRIVATE);
+                        String correoA = prefe.getString("correoA", "no correo");
+                        String passwordA = prefe2.getString("passwordA", "no password");
+                        //Toast.makeText(view.getContext(),correoA+"/"+passwordA,Toast.LENGTH_LONG).show();
 
-                                AuthCredential credential = EmailAuthProvider.getCredential(correoA,passwordA);
-                                userFB.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        AuthCredential credential = EmailAuthProvider.getCredential(correoA, passwordA);
+                        userFB.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(view.getContext(), "Usuario autenticado", Toast.LENGTH_LONG).show();
+                                FirebaseUser user2 = FirebaseAuth.getInstance().getCurrentUser();
+                                //UPDATE CORREO
+
+                                user2.updateEmail(correo).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        Toast.makeText(view.getContext(),"Usuario autenticado",Toast.LENGTH_LONG).show();
-                                        FirebaseUser user2 = FirebaseAuth.getInstance().getCurrentUser();
-                                        //UPDATE CORREO
-
-                                        user2.updateEmail(correo).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(view.getContext(),"Se actualizo el corroe",Toast.LENGTH_LONG).show();
-                                                }else{
-                                                    Toast.makeText(view.getContext(),"Ha ocurrido un error",Toast.LENGTH_LONG).show();
-                                                }
-                                            }
-                                        });
-
-                                        user2.updatePassword(contraseña).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(view.getContext(),"Se actualizo la contraseña",Toast.LENGTH_LONG).show();
-                                                }else{
-                                                    Toast.makeText(view.getContext(),"Ha ocurrido un error",Toast.LENGTH_LONG).show();
-                                                }
-                                            }
-                                        });
-
-
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(view.getContext(), "Se actualizo el corroe", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(view.getContext(), "Ha ocurrido un error", Toast.LENGTH_LONG).show();
+                                        }
                                     }
                                 });
 
-                                Toast.makeText(ActualizarPerfilActivity.this,"Se ha actualizado con exito",Toast.LENGTH_LONG).show();
+                                user2.updatePassword(contraseña).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(view.getContext(), "Se actualizo la contraseña", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(view.getContext(), "Ha ocurrido un error", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
 
 
+                            }
+                        });
+
+                        Toast.makeText(ActualizarPerfilActivity.this, "Se ha actualizado con exito", Toast.LENGTH_LONG).show();
 
 
-
-
-
-
-
-
-                ////////AAA
+                        ////////AAA
 /*                if(isValidEmail(correo) && validadPassword() && validarNombre(nombre)){
 
                     String contraseña = etPassword.getText().toString() ;
@@ -322,18 +322,20 @@ public class ActualizarPerfilActivity extends AppCompatActivity {
 
                     Toast.makeText(ActualizarPerfilActivity.this,"Se ha actualizado con exito",Toast.LENGTH_LONG).show();*/
 
-                    ///AAAAAAAAAAAAA
+                        ///AAAAAAAAAAAAA
 
 
+                    } else {
+                        Toast.makeText(ActualizarPerfilActivity.this, "Campos vacíos", Toast.LENGTH_SHORT).show();
+                    }
                 }else{
-                    Toast.makeText(ActualizarPerfilActivity.this,"Ha ocurrido un error",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(),"Sin conexión a internet",Toast.LENGTH_LONG).show();
                 }
-
 
             }
         });
 
-        Glide.with(this).load(Constantes.URL_FOTO_POR_DEFECTO_USUARIOS).into(fotoPerfil);
+        //Glide.with(this).load(Constantes.URL_FOTO_POR_DEFECTO_USUARIOS).into(fotoPerfil);
 
     }
 
@@ -397,7 +399,11 @@ public class ActualizarPerfilActivity extends AppCompatActivity {
         String fotoPerfilURL = datos.getString("fotoPerfilURL");
         String fechaDeNacimiento = datos.getString("fechaDeNacimiento");
         String msj = nombre + "/" + correo + "/" + genero + "/" + fotoPerfilURL + "/" + fechaDeNacimiento + "/" ;
-        Toast.makeText(this,msj,Toast.LENGTH_LONG).show();
+        etNombre.setText(nombre);
+        etCorreo.setText(correo);
+        //etPassword.setText();
+        Glide.with(ActualizarPerfilActivity.this).load(fotoPerfilURL).into(fotoPerfil);
+        //Toast.makeText(this,msj,Toast.LENGTH_LONG).show();
     }
 
 }

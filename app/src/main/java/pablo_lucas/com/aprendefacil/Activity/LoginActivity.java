@@ -1,6 +1,9 @@
 package pablo_lucas.com.aprendefacil.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -62,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 }else {
-                    Toast.makeText(LoginActivity.this,"Validaciones funcionados",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this,"Correo o contraseña incorrecta",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -82,7 +85,18 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    //COMPROBANDO CONEXIÓN A INTERNET
+        //https://developer.android.com/training/monitoring-device-state/connectivity-status-type?hl=es-419#java
+/*        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
 
+        if (isConnected){
+            Toast.makeText(this,"Conectado a internet",Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(this,"Sin conexión a internet",Toast.LENGTH_LONG).show();
+        }*/
     }
 
     private boolean isValidEmail(CharSequence target) {

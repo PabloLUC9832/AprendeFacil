@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import pablo_lucas.com.aprendefacil.R;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -32,16 +35,30 @@ public class RecuperarPasswordActivity extends AppCompatActivity {
 
     public void recuperarPassword(View v){
         String correo = etEmail.getText().toString();
-        auth.sendPasswordResetEmail(correo).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(v.getContext(),"El correo ha sido enviado, revisa tu bandeja",Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(v.getContext(),"Ha ocurrido un error al enviar el correo, intentalo nuevamente",Toast.LENGTH_LONG).show();
+
+
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+        if (isConnected){
+
+            auth.sendPasswordResetEmail(correo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(v.getContext(),"El correo ha sido enviado, revisa tu bandeja",Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(v.getContext(),"Ha ocurrido un error al enviar el correo, intentalo nuevamente",Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
-        });
+            });
+            
+        }else{
+            Toast.makeText(v.getContext(),"Sin conexión a internet",Toast.LENGTH_LONG).show();
+        }
+
+
     }
 
 }

@@ -1,6 +1,9 @@
 package pablo_lucas.com.aprendefacil.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -32,10 +35,20 @@ public class MenuActivity extends AppCompatActivity {
         btnMiPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (view.getContext(), PerfilActivity.class);
-                intent.putExtra("idUser",idUser);
-                startActivity(intent);
-                finish();
+
+                ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+                if (isConnected){
+                    Intent intent = new Intent (view.getContext(), PerfilActivity.class);
+                    intent.putExtra("idUser",idUser);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Toast.makeText(view.getContext(),"Sin conexión a internet",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -44,8 +57,17 @@ public class MenuActivity extends AppCompatActivity {
         btnCerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                returnLogin();
+                ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+                if (isConnected){
+                    //Toast.makeText(view.getContext(),"Conectado a internet",Toast.LENGTH_LONG).show();
+                    FirebaseAuth.getInstance().signOut();
+                    returnLogin();
+                }else{
+                    Toast.makeText(view.getContext(),"Sin conexión a internet",Toast.LENGTH_LONG).show();
+                }
             }
         });
 
