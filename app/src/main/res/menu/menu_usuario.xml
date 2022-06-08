@@ -13,4 +13,9 @@
         android:title="Eliminar Perfil"
         />
 
+    <item
+        android:id="@+id/correoSoporte"
+        android:title="Enviar correo al soporte"
+        />
+
 </menu>

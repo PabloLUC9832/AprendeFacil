@@ -53,7 +53,7 @@ public class RecuperarPasswordActivity extends AppCompatActivity {
                     }
                 }
             });
-            
+
         }else{
             Toast.makeText(v.getContext(),"Sin conexión a internet",Toast.LENGTH_LONG).show();
         }
