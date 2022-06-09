@@ -49,6 +49,19 @@
                 android:onClick="eliminar"
                 />
 
+            <Button
+                android:id="@+id/btnHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnEliminarCuenta"
+                android:layout_marginTop="45dp"
+                android:textColor="#000000"
+                android:text="Volver a inicio"
+                android:layout_centerHorizontal="true"
+                android:textSize="18dp"
+                android:onClick="inicio"
+                />
+
         </RelativeLayout>
 
     </ScrollView>

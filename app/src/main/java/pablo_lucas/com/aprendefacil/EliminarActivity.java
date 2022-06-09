@@ -3,8 +3,12 @@ package pablo_lucas.com.aprendefacil;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import pablo_lucas.com.aprendefacil.Activity.LoginActivity;
+import pablo_lucas.com.aprendefacil.Activity.MenuActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,36 +46,51 @@ public class EliminarActivity extends AppCompatActivity {
         Bundle datos = getIntent().getExtras();
         String mIdUser = datos.getString("mIdUser");
 
-        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
-                if (task.isSuccessful()) {
-                    Intent intent = new Intent (getApplicationContext(), LoginActivity.class);
-                    mDatabase.child("Usuarios").child(mIdUser).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(),"de realtime",Toast.LENGTH_LONG).show();
-                                startActivity(intent);
-                            }else{
-                                Toast.makeText(getApplicationContext(),"no se elimino de realtime: "+task.getException().getMessage(),Toast.LENGTH_LONG).show();
+        if (isConnected){
+            user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+
+                    if (task.isSuccessful()) {
+                        Intent intent = new Intent (getApplicationContext(), LoginActivity.class);
+                        //startActivity(intent);
+                        mDatabase.child("Usuarios").child(mIdUser).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getApplicationContext(),"de realtime",Toast.LENGTH_LONG).show();
+                                    startActivity(intent);
+                                    //finish();
+                                }else{
+                                    Toast.makeText(getApplicationContext(),"no se elimino de realtime: "+task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                                }
                             }
-                        }
-                    });
+                        });
 
-                    Toast.makeText(getApplicationContext(),"La cuenta se ha eliminado correctamente. Te echaremos de menos :(",Toast.LENGTH_LONG).show();
-                    //Intent intent = new Intent (getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
+                        Toast.makeText(getApplicationContext(),"La cuenta se ha eliminado correctamente. Te echaremos de menos :(",Toast.LENGTH_LONG).show();
+                        //Intent intent = new Intent (getApplicationContext(), LoginActivity.class);
+                        //startActivity(intent);
+                        //finish();
 
-                }else{
-                    Toast.makeText(v.getContext(),"Ha ocurrido un error: "+task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(v.getContext(),"Ha ocurrido un error: "+task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                    }
+
                 }
+            });
+        }else{
+            Toast.makeText(v.getContext(),"Sin conexión a internet",Toast.LENGTH_LONG).show();
+        }
 
-            }
-        });
+    }
 
-
+    public void inicio(View v){
+        startActivity(new Intent(EliminarActivity.this,LoginActivity.class));
+        finish();
     }
 
 

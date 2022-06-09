@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -176,68 +178,79 @@ public class RegistroActivity extends AppCompatActivity {
                 final String correo = txtCorreo.getText().toString();
                 final String nombre = txtNombre.getText().toString();
 
-                if(isValidEmail(correo) && validadContraseña() && validarNombre(nombre)){
+                ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
-                    String contraseña = txtContraseña.getText().toString() ;
-                    mAuth.createUserWithEmailAndPassword(correo, contraseña)
-                            .addOnCompleteListener(RegistroActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
+                if (isConnected){
+                    //Toast.makeText(view.getContext(),"Conectado a internet",Toast.LENGTH_LONG).show();
 
-                                    final String genero;
-                                    if (rdHombre.isChecked()){
-                                        genero = "Hombre";
-                                    }else{
-                                        genero = "Mujer";
+
+                    if(isValidEmail(correo) && validadContraseña() && validarNombre(nombre)){
+
+                        String contraseña = txtContraseña.getText().toString() ;
+                        mAuth.createUserWithEmailAndPassword(correo, contraseña)
+                                .addOnCompleteListener(RegistroActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+
+                                        final String genero;
+                                        if (rdHombre.isChecked()){
+                                            genero = "Hombre";
+                                        }else{
+                                            genero = "Mujer";
+                                        }
+
+                                        if (fotoPerfilUri!=null) {
+
+                                            UsuarioDAO.getInstancia().subirFotoUri(fotoPerfilUri, new UsuarioDAO.IDevolverUrlFoto() {
+                                                @Override
+                                                public void devolverUrlString(String url) {
+                                                    Toast.makeText(RegistroActivity.this, "Registro exitoso :D", Toast.LENGTH_SHORT).show();
+                                                    Usuario usuario = new Usuario();
+                                                    usuario.setCorreo(correo);
+                                                    usuario.setNombre(nombre);
+                                                    usuario.setFechaDeNacimiento(fechaDeNacimiento);
+                                                    usuario.setGenero(genero);
+                                                    usuario.setFotoPerfilURL(url);
+                                                    FirebaseUser currentUser = mAuth.getCurrentUser();
+                                                    DatabaseReference reference = database.getReference("Usuarios/" + currentUser.getUid());
+                                                    reference.setValue(usuario);
+                                                    finish();
+
+                                                }
+                                            });
+
+                                        }else{
+
+                                            Toast.makeText(RegistroActivity.this,"Registro exitoso :D",Toast.LENGTH_SHORT).show();
+                                            Usuario usuario = new Usuario();
+                                            usuario.setCorreo(correo);
+                                            usuario.setNombre(nombre);
+                                            usuario.setFechaDeNacimiento(fechaDeNacimiento);
+                                            usuario.setGenero(genero);
+                                            usuario.setFotoPerfilURL(Constantes.URL_FOTO_POR_DEFECTO_USUARIOS);
+                                            FirebaseUser currentUser = mAuth.getCurrentUser();
+                                            DatabaseReference reference = database.getReference("Usuarios/"+currentUser.getUid());
+                                            reference.setValue(usuario);
+                                            finish();
+
+                                        }
+
+
+                                        } else {
+                                            Toast.makeText(RegistroActivity.this,"Error al registrarse",Toast.LENGTH_SHORT).show();
+                                        }
                                     }
+                                });
+                    }else{
+                        Toast.makeText(RegistroActivity.this,"Campos vacios",Toast.LENGTH_SHORT).show();
+                    }
 
-                                    if (fotoPerfilUri!=null) {
-
-                                        UsuarioDAO.getInstancia().subirFotoUri(fotoPerfilUri, new UsuarioDAO.IDevolverUrlFoto() {
-                                            @Override
-                                            public void devolverUrlString(String url) {
-                                                Toast.makeText(RegistroActivity.this, "Registro exitoso :D", Toast.LENGTH_SHORT).show();
-                                                Usuario usuario = new Usuario();
-                                                usuario.setCorreo(correo);
-                                                usuario.setNombre(nombre);
-                                                usuario.setFechaDeNacimiento(fechaDeNacimiento);
-                                                usuario.setGenero(genero);
-                                                usuario.setFotoPerfilURL(url);
-                                                FirebaseUser currentUser = mAuth.getCurrentUser();
-                                                DatabaseReference reference = database.getReference("Usuarios/" + currentUser.getUid());
-                                                reference.setValue(usuario);
-                                                finish();
-
-                                            }
-                                        });
-
-                                    }else{
-
-                                        Toast.makeText(RegistroActivity.this,"Registro exitoso :D",Toast.LENGTH_SHORT).show();
-                                        Usuario usuario = new Usuario();
-                                        usuario.setCorreo(correo);
-                                        usuario.setNombre(nombre);
-                                        usuario.setFechaDeNacimiento(fechaDeNacimiento);
-                                        usuario.setGenero(genero);
-                                        usuario.setFotoPerfilURL(Constantes.URL_FOTO_POR_DEFECTO_USUARIOS);
-                                        FirebaseUser currentUser = mAuth.getCurrentUser();
-                                        DatabaseReference reference = database.getReference("Usuarios/"+currentUser.getUid());
-                                        reference.setValue(usuario);
-                                        finish();
-
-                                    }
-
-
-                                    } else {
-                                        Toast.makeText(RegistroActivity.this,"Error al registrarse",Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
                 }else{
-                    Toast.makeText(RegistroActivity.this,"Validaciones Funcionando",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(),"Ha ocurrido un error, al parecer has perdido tu conexión a internet. Intentalo nuevamente.",Toast.LENGTH_LONG).show();
                 }
-
 //                SharedPreferences prefe=getSharedPreferences("correo",Context.MODE_PRIVATE);
 //                prefe.getString("correoA","");
 //                SharedPreferences preferencias=getSharedPreferences("correo",Context.MODE_PRIVATE);

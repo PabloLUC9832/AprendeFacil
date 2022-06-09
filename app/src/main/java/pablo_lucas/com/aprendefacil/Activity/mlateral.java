@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import pablo_lucas.com.aprendefacil.R;
+
 public class mlateral extends AppCompatActivity {
 
     @Override

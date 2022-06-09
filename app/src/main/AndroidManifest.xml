@@ -12,8 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activity.mlateral"
-            android:exported="false" />
+
+            android:name=".SoporteActivity"
+            android:exported="false"
+            android:label="Enviar correo al soporte" />
+        <activity
+            android:name=".EncuestasActivity"
+            android:exported="false"
+            android:label="Enviar sugerencias al programador" />
+        <activity
+            android:name=".Activity.RecuperarPasswordActivity"
+            android:exported="false"
+            android:label="Recuperar mi cuenta" />
+>>>>>>> 75a80c9ebd35ba2ab3be325283df574fa803de99
         <activity
             android:name=".EliminarActivity"
             android:exported="false"
@@ -26,15 +37,21 @@
             android:name=".Activity.PerfilActivity"
             android:exported="false"
             android:label="Mi Perfil" />
-        <activity android:name=".Activity.LoginActivity">
+        <activity
+            android:name=".Activity.LoginActivity"
+            android:label="Inicio de Sesión">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.MenuActivity" />
-        <activity android:name=".Activity.RegistroActivity" />
+        <activity
+            android:name=".Activity.MenuActivity"
+            android:label="Home" />
+        <activity
+            android:name=".Activity.RegistroActivity"
+            android:label="Registrarse" />
     </application>
 
 </manifest>

@@ -7,6 +7,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import pablo_lucas.com.aprendefacil.EliminarActivity;
 import pablo_lucas.com.aprendefacil.Persistencia.UsuarioDAO;
 import pablo_lucas.com.aprendefacil.R;
+import pablo_lucas.com.aprendefacil.SoporteActivity;
+import pablo_lucas.com.aprendefacil.EncuestasActivity;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -161,6 +163,17 @@ public class PerfilActivity extends AppCompatActivity{
             String mIdUser = datos.getString("idUser");
             Intent intent = new Intent (getApplicationContext(), EliminarActivity.class);
             intent.putExtra("mIdUser",FirebaseAuth.getInstance().getUid());
+            startActivity(intent);
+            finish();
+        }
+
+        if(id == R.id.correoSoporte){
+            Intent intent = new Intent (getApplicationContext(), SoporteActivity.class);
+            startActivity(intent);
+        }
+
+        if(id == R.id.encuestasProgramador){
+            Intent intent = new Intent (getApplicationContext(), EncuestasActivity.class);
             startActivity(intent);
         }
 /*            Bundle datos = getIntent().getExtras();

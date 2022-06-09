@@ -1,6 +1,9 @@
 package pablo_lucas.com.aprendefacil.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin,btnRegistro;
     private FirebaseAuth mAuth;// ...
 
+    Button idRecupera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         txtContraseña = (EditText)findViewById(R.id.idContraseñaLogin);
         btnLogin = (Button) findViewById(R.id.idLoginLogin);
         btnRegistro = (Button) findViewById(R.id.idRegistroLogin);
+
+        idRecupera = findViewById(R.id.idRecupera);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -59,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 }else {
-                    Toast.makeText(LoginActivity.this,"Validaciones funcionados",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this,"Correo o contraseña incorrecta",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -72,6 +78,25 @@ public class LoginActivity extends AppCompatActivity {
 
         //UsuarioDAO.getInstancia().añadirFotoDePerfilALosUsuariosQueNoTienenFoto();
 
+        idRecupera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(),RecuperarPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+    //COMPROBANDO CONEXIÓN A INTERNET
+        //https://developer.android.com/training/monitoring-device-state/connectivity-status-type?hl=es-419#java
+/*        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        if (isConnected){
+            Toast.makeText(this,"Conectado a internet",Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(this,"Sin conexión a internet",Toast.LENGTH_LONG).show();
+        }*/
     }
 
     private boolean isValidEmail(CharSequence target) {
