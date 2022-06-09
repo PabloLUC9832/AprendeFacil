@@ -18,4 +18,9 @@
         android:title="Enviar correo al soporte"
         />
 
+    <item
+        android:id="@+id/encuestasProgramador"
+        android:title="Enviar sugerencias"
+        />
+
 </menu>

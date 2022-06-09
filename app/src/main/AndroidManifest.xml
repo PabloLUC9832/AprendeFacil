@@ -16,6 +16,10 @@
             android:exported="false"
             android:label="Enviar correo al soporte" />
         <activity
+            android:name=".EncuestasActivity"
+            android:exported="false"
+            android:label="Enviar sugerencias el programador" />
+        <activity
             android:name=".Activity.RecuperarPasswordActivity"
             android:exported="false"
             android:label="Recuperar mi cuenta" />
