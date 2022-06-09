@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#00897b"
     tools:context=".EncuestasActivity">
 
     <androidx.cardview.widget.CardView
@@ -15,6 +16,7 @@
 
 
         <RelativeLayout
+            android:background="#00897b"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -36,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/et_Para"
                 android:layout_centerHorizontal="true"
+                android:background="#26c6da"
                 android:text="Rellena el siguiente formulario para enviar tus sugerencias al programador."
                 android:textColor="#000000" />
 
@@ -49,6 +52,7 @@
                 android:layout_marginTop="63dp"
                 android:ems="10"
                 android:hint="Asunto"
+                android:background="#80daa2"
                 android:inputType="textPersonName" />
 
             <EditText
@@ -61,6 +65,7 @@
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="Redacta tu mensaje"
+                android:background="#80daa2"
                 android:lines="10" />
 
             <Button
@@ -72,6 +77,7 @@
                 android:layout_marginTop="195dp"
                 android:onClick="Send"
                 android:text="Enviar"
+                android:background="#80deea"
                 android:textStyle="bold" />
         </RelativeLayout>
 

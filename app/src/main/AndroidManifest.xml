@@ -18,7 +18,7 @@
         <activity
             android:name=".EncuestasActivity"
             android:exported="false"
-            android:label="Enviar sugerencias el programador" />
+            android:label="Enviar sugerencias al programador" />
         <activity
             android:name=".Activity.RecuperarPasswordActivity"
             android:exported="false"
