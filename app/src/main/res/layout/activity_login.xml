@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -11,24 +13,41 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="327dp"
+            android:layout_height="122dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="1dp"
+            android:layout_weight="1"
+
+            tools:srcCompat="@drawable/boy_toy_metal_children_robot_icon_219386" />
     </LinearLayout>
-   <EditText
+
+    <EditText
        android:id="@+id/idCorreoLogin"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:hint="Correo"
        android:inputType="textEmailAddress"/>
+
     <EditText
         android:id="@+id/idContraseñaLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Contraseña"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword" />
     <Button
         android:id="@+id/idLoginLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Iniciar sesión"/>
+        android:hint="Iniciar sesión"
+        android:background="@color/loginx"
+        android:textColor="@color/colorText"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,7 +57,9 @@
         android:id="@+id/idRegistroLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Registrarse"/>
+        android:hint="Registrarse"
+        android:background="@color/loginx"
+        android:textColor="@color/colorText"/>
 
 
     </LinearLayout>

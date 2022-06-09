@@ -10,6 +10,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import pablo_lucas.com.aprendefacil.Persistencia.UsuarioDAO;
 import pablo_lucas.com.aprendefacil.R;
 
@@ -17,6 +19,8 @@ public class MenuActivity extends AppCompatActivity {
 
     private Button btnMiPerfil;
     private Button btnCerrarSesion;
+    Button b_dark;
+    Button b_light;
     String idUser;
 
     @Override
@@ -24,10 +28,31 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        b_dark = findViewById(R.id.b_dark);
+        b_light = findViewById(R.id.b_light);
+
         idUser = FirebaseAuth.getInstance().getUid();
 
         btnMiPerfil = findViewById(R.id.btnMiPerfil);
         btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
+
+        b_dark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+                finish();
+            }
+        });
+
+        b_light.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+                finish();
+            }
+        });
 
         btnMiPerfil.setOnClickListener(new View.OnClickListener() {
             @Override

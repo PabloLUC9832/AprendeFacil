@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Aprende Facil</string>
     <string name="ActivityProfesores">Elige un profesor</string>
-    <string name="text_info">Seleccione un tema</string>
-    <string name="logix">BIENVENIDO</string>
+    <string name="text_info">Selecciona un tema</string>
+
 </resources>

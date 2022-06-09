@@ -12,9 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Activity.mlateral"
+            android:exported="false" />
+        <activity
             android:name=".EliminarActivity"
             android:exported="false"
-            android:label="Eliminar mi cuenta"/>
+            android:label="Eliminar mi cuenta" />
         <activity
             android:name=".Activity.ActualizarPerfilActivity"
             android:exported="false"
