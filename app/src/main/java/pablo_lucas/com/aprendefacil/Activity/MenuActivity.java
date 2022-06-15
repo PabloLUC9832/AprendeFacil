@@ -17,11 +17,13 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import pablo_lucas.com.aprendefacil.Persistencia.UsuarioDAO;
 import pablo_lucas.com.aprendefacil.R;
+import pablo_lucas.com.aprendefacil.SoporteActivity;
 
 public class MenuActivity extends AppCompatActivity {
 
     private Button btnMiPerfil;
     private Button btnCerrarSesion;
+    private Button btnAprender;
     Button b_dark;
     Button b_light;
     String idUser;
@@ -38,6 +40,7 @@ public class MenuActivity extends AppCompatActivity {
 
         btnMiPerfil = findViewById(R.id.btnMiPerfil);
         btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
+        btnAprender = findViewById(R.id.btnAprender);
 
         b_dark.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +57,14 @@ public class MenuActivity extends AppCompatActivity {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 startActivity(new Intent(getApplicationContext(), MenuActivity.class));
                 finish();
+            }
+        });
+
+        btnAprender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentA = new Intent (MenuActivity.this, ElegirActivity.class);
+                startActivity(intentA);
             }
         });
 

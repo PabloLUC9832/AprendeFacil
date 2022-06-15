@@ -24,7 +24,34 @@
             android:name=".Activity.RecuperarPasswordActivity"
             android:exported="false"
             android:label="Recuperar mi cuenta" />
->>>>>>> 75a80c9ebd35ba2ab3be325283df574fa803de99
+        <activity
+            android:name=".Activity.ElegirActivity"
+            android:exported="false"
+            android:label="Elegir Area a Estudiar" />
+        <activity
+            android:name=".Activity.EspanolActivity"
+            android:exported="false"
+            android:label="Elige un video" />
+        <activity
+            android:name=".Activity.MatematicasActivity"
+            android:exported="false"
+            android:label="Elige un video" />
+        <activity
+            android:name=".Activity.CienciasActivity"
+            android:exported="false"
+            android:label="Elige un video" />
+        <activity
+            android:name=".Activity.HistoriaActivity"
+            android:exported="false"
+            android:label="Elige un video" />
+        <activity
+            android:name=".Activity.GeografiaActivity"
+            android:exported="false"
+            android:label="Elige un video" />
+        <activity
+            android:name=".Activity.InglesActivity"
+            android:exported="false"
+            android:label="Elige un video" />
         <activity
             android:name=".EliminarActivity"
             android:exported="false"

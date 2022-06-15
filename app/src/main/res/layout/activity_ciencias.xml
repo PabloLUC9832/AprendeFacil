@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_ciencias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ciencias Naturales"
+        android:textAlignment="center"
+        android:textColor="#43A047"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.051" />
+
+    <TextView
+        android:id="@+id/tv_selecCie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selecciona el video que quieres ver:"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ciencias"
+        app:layout_constraintVertical_bias="0.044" />
+
+    <Button
+        android:id="@+id/b_V1"
+        android:layout_width="337dp"
+        android:layout_height="48dp"
+        android:background="#E8F5E9"
+        android:text="Animales Vertebrados"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_selecCie"
+        app:layout_constraintVertical_bias="0.387" />
+
+    <Button
+        android:id="@+id/b_V4"
+        android:layout_width="337dp"
+        android:layout_height="48dp"
+        android:background="#81C784"
+        android:text="Reinos de Seres Vivos"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_selecCie"
+        app:layout_constraintVertical_bias="0.962" />
+
+    <Button
+        android:id="@+id/b_V3"
+        android:layout_width="337dp"
+        android:layout_height="48dp"
+        android:background="#A5D6A7"
+        android:text="Plato del Buen Comer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_selecCie"
+        app:layout_constraintVertical_bias="0.782" />
+
+    <Button
+        android:id="@+id/b_V2"
+        android:layout_width="337dp"
+        android:layout_height="48dp"
+        android:background="#C8E6C9"
+        android:text="Animales Invertebrados"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_selecCie"
+        app:layout_constraintVertical_bias="0.591" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
